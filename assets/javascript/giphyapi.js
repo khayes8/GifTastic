@@ -41,7 +41,7 @@ $(document).on("click", "button", function(event) {
 
  var media = $(this).attr("data-name");
 // //constructing a url to call to the Giphy API and retrieve media image
-var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
    media + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 console.log(queryURL);
