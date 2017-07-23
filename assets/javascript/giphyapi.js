@@ -37,17 +37,12 @@ createButtons();
 
 
 // Event listener for all button elements
-
 $(document).on("click", "button", function(event) {
 
-// This was the first way we used the on click:   $("button").on("click", function() {
-// In this case, the "this" keyword refers to the button that was clicked
-
-var media = $(this).attr("data-name");
-
-// Constructing a URL to search Giphy for the name of the person who said the quote
+ var media = $(this).attr("data-name");
+// //constructing a url to call to the Giphy API and retrieve media image
 var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-    media + "&api_key=dc6zaTOxFJmzC&limit=10";
+   media + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 console.log(queryURL);
 // Performing our AJAX GET request
@@ -63,7 +58,6 @@ $("img").remove();
 $(".rating").remove();
 
 // Storing an array of results in the results variable
-
 var results = response.data;
 
 // Looping over every result item
@@ -80,26 +74,25 @@ if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
     // Creating a paragraph tag with the result item's rating
     var p = $("<p>").text("Rating: " + rating);
 
-    p.addClass("rating");
-
+p.addClass("rating");
 
 // Creating an image tag
-var animalImage = $("<img>");
-animalImage.addClass("animalImageClass");
+var mediaImage = $("<img>");
+mediaImage.addClass("mediaImageClass");
 
 // Giving the image tag an src attribute of a proprty pulled off the
 // result item
 
-animalImage.attr("src", results[i].images.fixed_height_still.url);
-animalImage.attr("data-state", "still");
-animalImage.attr("animate", results[i].images.fixed_height_still.url);
-animalImage.attr("still", results[i].images.fixed_height.url);
+mediaImage.attr("src", results[i].images.fixed_height.url);
+mediaImage.attr("data-state", "animate");
+mediaImage.attr("animate", results[i].images.fixed_height_still.url);
+mediaImage.attr("still", results[i].images.fixed_height.url);
 
 
-// Appending the paragraph and personImage we created to the "gifDiv" div we created
+// Appending the paragraph and mediaImage we created to the "gifDiv" div we created
 
 gifDiv.append(p);
-gifDiv.append(animalImage);
+gifDiv.append(mediaImage);
 
 // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
 
@@ -107,22 +100,30 @@ $("#gifs-appear-here").prepend(gifDiv);
 
                         
 
-$(".animalImageClass").on("click", function() {
-// The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-var state = $(this).attr("data-state");
-// If the clicked image's state is still, update its src attribute to what its data-animate value is.
-// Then, set the image's data-state to animate
-// Else set src to the data-still value
-if (state === "still") {
-$(this).attr("src", $(this).attr("animate"));
-$(this).attr("data-state", "animate");
-} else {
-$(this).attr("src", $(this).attr("still"));
-$(this).attr("data-state", "still");
+$(".mediaImageClass").on("click", function() {
+  // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+  var state = $(this).attr("data-state");
+  // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+  // Then, set the image's data-state to animate
+  // Else set src to the data-still value
+  if (state === "animate") {
+  $(this).attr("src", $(this).attr("still"));
+  $(this).attr("data-state", "still");
+  } else {
+  $(this).attr("src", $(this).attr("animate"));
+  $(this).attr("data-state", "animate");
+  }
+  });
+
+
+
+}
 }
 });
+});
 
-    // // This function handles events where one button is clicked
+
+// This function handles events where one button is clicked
 
 
     $("#add-tv-show").on("click", function(event) {
