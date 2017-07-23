@@ -82,34 +82,45 @@ if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
 
     p.addClass("rating");
 
-    // Creating an image tag
-    var stillImage = $("<img>");
+
+// Creating an image tag
+var animalImage = $("<img>");
+animalImage.addClass("animalImageClass");
+
+// Giving the image tag an src attribute of a proprty pulled off the
+// result item
+
+animalImage.attr("src", results[i].images.fixed_height_still.url);
+animalImage.attr("data-state", "still");
+animalImage.attr("animate", results[i].images.fixed_height_still.url);
+animalImage.attr("still", results[i].images.fixed_height.url);
 
 
-    // Giving the image tag an src attribute of a proprty pulled off the
-    // result item
+// Appending the paragraph and personImage we created to the "gifDiv" div we created
 
-    stillImage.attr("src", results[i].images.fixed_height.url);
+gifDiv.append(p);
+gifDiv.append(animalImage);
 
-    // animatedImage.attr("src", results[i].images.fixed_height.url);
+// Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
 
+$("#gifs-appear-here").prepend(gifDiv);
 
+                        
 
-    // Appending the paragraph and personImage we created to the "gifDiv" div we created
-
-    gifDiv.append(p);
-    gifDiv.append(stillImage);
-
-    // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
-
-    $("#gifs-appear-here").prepend(gifDiv);
-
-
-                    }
-                }
-            });
-    });
-
+$(".animalImageClass").on("click", function() {
+// The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+var state = $(this).attr("data-state");
+// If the clicked image's state is still, update its src attribute to what its data-animate value is.
+// Then, set the image's data-state to animate
+// Else set src to the data-still value
+if (state === "still") {
+$(this).attr("src", $(this).attr("animate"));
+$(this).attr("data-state", "animate");
+} else {
+$(this).attr("src", $(this).attr("still"));
+$(this).attr("data-state", "still");
+}
+});
 
     // // This function handles events where one button is clicked
 
